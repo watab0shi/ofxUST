@@ -15,6 +15,6 @@ Addons: ofxUST
 Generate  
   
 Drag & drop ofxUST/include and ofxUST/libs into addons/ofxUST on project navigator.  
-![step01](img-step01.gif)
+![step01](img-step01.gif)  
 Drag & drop addons/ofxUST/libs/liburg_cpp.so into "Build Phases > Link Binary With Libraries".  
-![step02](img-step02.gif)
+![step02](img-step02.gif)  
