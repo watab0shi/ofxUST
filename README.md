@@ -18,3 +18,9 @@ Drag & drop ofxUST/include and ofxUST/libs into addons/ofxUST on project navigat
 ![step01](img-step01.gif)  
 Drag & drop addons/ofxUST/libs/liburg_cpp.so into "Build Phases > Link Binary With Libraries".  
 ![step02](img-step02.gif)  
+  
+
+# Connection
+Connect the sensor to the power supply.  
+Connect sensor's LAN cable to your PC.  
+Set the IP address according to the IP address of the device.  
