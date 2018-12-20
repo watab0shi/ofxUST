@@ -162,10 +162,9 @@ void ofxUST::update()
   
   coordinates.clear();
   
-  for( size_t i = 0; i < nData; ++i )
+  for( size_t i = 0; i < nData; i += skip )
   {
     int idx = ( bMirror ) ? ( nData - 1 ) - i : i;
-    if( skip > 0 ) idx *= skip;
     
     long l  = data.at( i );
     
