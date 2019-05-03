@@ -18,7 +18,6 @@ void ofApp::setup()
 //--------------------------------------------------------------
 void ofApp::update()
 {
-  ust.setMirror( bMirror );
   ust.update();
 }
 
@@ -50,7 +49,11 @@ void ofApp::draw()
 //--------------------------------------------------------------
 void ofApp::keyPressed( int key )
 {
-  if( key == 'm' ) bMirror = !bMirror;
+  if( key == 'm' )
+  {
+    bMirror = !bMirror;
+    ust.setMirror( bMirror );
+  }
   
   if( key == OF_KEY_RIGHT ) ust.setDirection( ofxUST::DIRECTION_RIGHT );
   if( key == OF_KEY_DOWN )  ust.setDirection( ofxUST::DIRECTION_DOWN );
