@@ -76,4 +76,4 @@ vs:
 osx:
 	# when parsing the file system looking for include paths exclude this for all or
 	# a specific platform
-	ADDON_LIBS += libs/urg/lib/$(Platform)/liburg_cpp.so
+	ADDON_LIBS += libs/urg/lib/osx/liburg_cpp.so
