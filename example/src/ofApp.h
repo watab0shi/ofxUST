@@ -9,9 +9,10 @@ public:
   void setup();
   void update();
   void draw();
-
-  void keyPressed( int key );
+  void mouseScrolled( int _x, int _y, float _scrollX, float _scrollY );
+  void keyPressed( int _key );
   
   ofxUST ust;
   bool   bMirror;
+  float  scale;
 };
