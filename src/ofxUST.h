@@ -1,29 +1,18 @@
-//
-//  ofxUST.h
-//  URGSensor_Test
-//
-//  Created by M-wataru-kani on 2017/01/27.
-//
-//
-
-#ifndef __URGSensor_Test__ofxUST__
-#define __URGSensor_Test__ofxUST__
+#pragma once
 
 #include "ofAppRunner.h"
 #include "ofVec2f.h"
 #include "Urg_driver.h"
 
-using namespace std;
 using namespace qrk;
 
 
 // ofUST
-//--------------------------------------------------------------------------------
+//----------------------------------------
 class ofxUST
 {
 public:
   ofxUST();
-  ~ofxUST();
   
   enum Direction
   {
@@ -32,6 +21,8 @@ public:
     DIRECTION_LEFT,
     DIRECTION_UP
   };
+
+  bool open();
   
   void setDirection( Direction _dir );
   void setMirror( bool _b );
@@ -56,16 +47,20 @@ public:
   
   void close();
   
-  vector< long >    data;
-  vector< ofVec2f > coordinates;
+  std::vector< long >    data;
+  std::vector< ofVec2f > coordinates;
   
 private:
+  const std::string deviceIp = "192.168.0.10";
+  const int         port     = 10940;
   
   Urg_driver urg;
   bool       bConnected;
-  Direction  direction;
+  
+  int        minStep, maxStep;
+  float      minAngle, maxAngle;
   int        skip;
+  
+  Direction  direction;
   bool       bMirror;
 };
-
-#endif /* defined(__URGSensor_Test__ofxUST__) */

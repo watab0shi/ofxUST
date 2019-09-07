@@ -5,6 +5,7 @@ void ofApp::setup()
 {
   bMirror = false;
   
+  ust.open();
   ust.setDirection( ofxUST::DIRECTION_DOWN );
   ust.setMirror( bMirror );
   ust.setScanningParameterByAngles( -135, 135, 1 );
