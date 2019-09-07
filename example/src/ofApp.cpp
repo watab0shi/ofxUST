@@ -11,6 +11,8 @@ void ofApp::setup()
   
   if( ust.isConnected() ) ust.startMeasurement();
   else                    ofLog() << "Connection failed!";
+
+  ofSetFrameRate( 40 );
   
   ofBackground( 0 );
 }

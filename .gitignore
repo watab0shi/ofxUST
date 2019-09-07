@@ -1,6 +1,26 @@
-Makefile
-*.plist
-*.xcconfig
+# Mac
 config.make
-example/bin
-example/*.xcodeproj
+Makefile
+*.xcodeproj
+*.xcconfig
+*.plist
+*.app
+
+# Win
+*.sdf
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+icon.aps
+icon.rc
+obj
+*.vs
+*.VC.db
+*.VC.opendb
+*.exe
+*.dll
+# *.lib
+*.exp
+
+# common
