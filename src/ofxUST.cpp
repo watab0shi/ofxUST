@@ -1,4 +1,5 @@
 #include "ofxUST.h"
+#include "ofAppRunner.h"
 
 
 // ofxUST
@@ -11,7 +12,7 @@ ofxUST::ofxUST()
 
 // open
 //----------------------------------------
-bool ofxUST::open()
+void ofxUST::open()
 {
   bConnected = urg.open( deviceIp.c_str(), port, Urg_driver::Ethernet );
   
@@ -155,8 +156,8 @@ void ofxUST::update()
     close();
     
     // try re-open
-    bool bOpen = open();
-    if( bOpen )
+    open();
+    if( bConnected )
     {
       setScanningParameterByAngles( minAngle, maxAngle, skip );
       startMeasurement();

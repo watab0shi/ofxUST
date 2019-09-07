@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ofAppRunner.h"
 #include "ofVec2f.h"
 #include "Urg_driver.h"
 
@@ -22,7 +21,7 @@ public:
     DIRECTION_UP
   };
 
-  bool open();
+  void open();
   
   void setDirection( Direction _dir );
   void setMirror( bool _b );
