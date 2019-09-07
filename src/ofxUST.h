@@ -18,7 +18,8 @@ public:
     DIRECTION_RIGHT = 0,
     DIRECTION_DOWN,
     DIRECTION_LEFT,
-    DIRECTION_UP
+    DIRECTION_UP,
+    DIRECTION_SIZE
   };
 
   void open();
