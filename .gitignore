@@ -22,5 +22,7 @@ obj
 *.dll
 *.lib
 *.exp
+*.iobj
+*.ipdb
 
 # common
