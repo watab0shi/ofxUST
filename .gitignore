@@ -20,7 +20,7 @@ obj
 *.VC.opendb
 *.exe
 *.dll
-# *.lib
+*.lib
 *.exp
 
 # common
