@@ -7,6 +7,9 @@
 ofxUST::ofxUST()
 : direction( DIRECTION_DOWN )
 , bMirror( false )
+, time( 0.0 )
+, lastCheckTime( 0.0 )
+, checkInterval( 1.0 )
 {
 }
 
@@ -144,7 +147,23 @@ void ofxUST::stopMeasurement()
 //----------------------------------------
 void ofxUST::update()
 {
-  if( !bConnected ) return;
+  time += ofGetLastFrameTime();
+
+  if( !bConnected )
+  {
+    if( time > lastCheckTime + checkInterval )
+    {
+      // try re-open
+      open();
+      if( bConnected )
+      {
+        setScanningParameterByAngles( minAngle, maxAngle, skip );
+        startMeasurement();
+      }
+      lastCheckTime = time;
+    }
+    return;
+  }
   
   long time_stamp = 0;
   
@@ -154,14 +173,7 @@ void ofxUST::update()
     ofLog() << "[ofxUST::update][Urg_driver::get_distance()] " << urg.what();
     
     close();
-    
-    // try re-open
-    open();
-    if( bConnected )
-    {
-      setScanningParameterByAngles( minAngle, maxAngle, skip );
-      startMeasurement();
-    }
+    bConnected = false;
     return;
   }
   

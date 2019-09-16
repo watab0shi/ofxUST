@@ -63,4 +63,8 @@ private:
   
   Direction  direction;
   bool       bMirror;
+
+  float time;
+  float checkInterval;
+  float lastCheckTime;
 };
