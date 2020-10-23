@@ -1,7 +1,7 @@
 # ofxUST
 Addon for using HOKUYO AUTOMATIC range sensor [UST Series](http://www.hokuyo-aut.co.jp/search/single.php?serial=16) on openFrameworks.
 
-![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
+![](https://github.com/antimodular/ofxUST/blob/dev_antimodular/run.gif?raw=true)
 
 
 # Install Library

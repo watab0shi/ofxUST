@@ -79,3 +79,4 @@ void ofApp::keyPressed( int _key )
   if( _key == OF_KEY_LEFT )  ust.setDirection( ofxUST::DIRECTION_LEFT );
   if( _key == OF_KEY_UP )    ust.setDirection( ofxUST::DIRECTION_UP );
 }
+https://github.com/antimodular/ofxUST/blob/dev_antimodular/run.gif?raw=true
