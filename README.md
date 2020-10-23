@@ -5,7 +5,7 @@ Addon for using HOKUYO AUTOMATIC range sensor [UST Series](http://www.hokuyo-aut
 Download latest URG library from [here](https://sourceforge.net/projects/urgnetwork/files/urg_library/).
 
 Copy the library to the addon's lib folder.
-[!](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
+![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
 
 For Mac  
 Enter the following commands to terminal.  
