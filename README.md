@@ -29,3 +29,7 @@ Default Gateway 192.168.1.1
 # Devices
 - Hokuyo UST UST-10LX
 
+# Compiling
+- After using the project generator i had to remove all urg_library-1.2.5 files from the Header Search Path and the Compile Sources tabs.
+![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
+![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
