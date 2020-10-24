@@ -8,7 +8,7 @@ Addon for using HOKUYO AUTOMATIC range sensor [UST Series](http://www.hokuyo-aut
 Download latest URG library from [here](https://sourceforge.net/projects/urgnetwork/files/urg_library/).
 
 Copy the library to the addon's lib folder.
-![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
+![](https://github.com/antimodular/ofxUST/blob/dev_antimodular/readme_media/run.gif?raw=true)
 
 For Mac  
 Enter the following commands to terminal.  
@@ -31,5 +31,5 @@ Default Gateway 192.168.1.1
 
 # Compiling
 - After using the project generator i had to remove all urg_library-1.2.5 files from the Header Search Path and the Compile Sources tabs.
-![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
-![](https://user-images.githubusercontent.com/1054816/97043938-41724f00-1541-11eb-865e-ecbc206bf3c9.png)
+![](https://github.com/antimodular/ofxUST/blob/dev_antimodular/readme_media/buildPhase_compileSources.png?raw=true)
+![](https://github.com/antimodular/ofxUST/blob/dev_antimodular/readme_media/headerSearchPaths.png?raw=true)
