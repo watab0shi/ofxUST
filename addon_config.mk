@@ -58,15 +58,15 @@ common:
 	
 	# when parsing the file system looking for libraries exclude this for all or
 	# a specific platform
-	# ADDON_LIBS_EXCLUDE =
+	ADDON_LIBS_EXCLUDE += libs/urg_library-1.2.5
 	
 	# when parsing the file system looking for sources exclude this for all or
 	# a specific platform
-	# ADDON_SOURCES_EXCLUDE = 
+	ADDON_SOURCES_EXCLUDE += libs/urg_library-1.2.5
 	
 	# when parsing the file system looking for include paths exclude this for all or
 	# a specific platform
-	# ADDON_INCLUDES_EXCLUDE =
+	ADDON_INCLUDES_EXCLUDE += libs/urg_library-1.2.5
 	
 vs:
 	# when parsing the file system looking for include paths exclude this for all or
