@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<LIDAR>
+	<minAngle>-45</minAngle>
+	<maxAngle>45</maxAngle>
+	<angleSteps>1</angleSteps>
+	<mirror>1</mirror>
+	<direction>1</direction>
+	<cloudScale>0.0639</cloudScale>
+	<cloudY>-348</cloudY>
+	<maxPointDistance>100</maxPointDistance>
+	<tracking>
+		<tracker_persistence>15</tracker_persistence>
+		<tracker_maxDistance>500</tracker_maxDistance>
+		<dyingTime>0.2</dyingTime>
+		<minAge>15</minAge>
+		<minSize>40</minSize>
+		<maxSize>350</maxSize>
+		<foundFacesAmount>0</foundFacesAmount>
+		<smoothingRate>0.1</smoothingRate>
+		<useBiQuadFilter>0</useBiQuadFilter>
+		<bqFilter_fc>0.035</bqFilter_fc>
+	</tracking>
+	<angleRange>52</angleRange>
+	<angleSkipSteps>1</angleSkipSteps>
+	<bgScaler>0.9825</bgScaler>
+</LIDAR>

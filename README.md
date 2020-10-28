@@ -22,9 +22,9 @@ Connect sensor's LAN cable to your PC.
 
 Set the IP address according to the IP address of the device.  
 I my case i set my computer to  
-IP Address 192.168.1.15
+IP Address 192.168.0.15
 Subnet Mask 255.255.255.0
-Default Gateway 192.168.1.1
+Default Gateway 192.168.0.1
 
 # Devices
 - Hokuyo UST UST-10LX

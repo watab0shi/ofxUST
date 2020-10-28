@@ -27,13 +27,27 @@ public:
     ofPolyline bgLine2;
     
     ofxPanel gui_lidar;
-    ofParameter<float> scale;
+    ofParameter<float> cloudScale;
+      ofParameter<int> cloudY;
      ofParameter<bool> bMirror;
     bool old_bMirror;
     ofParameter<int> direction;
     int old_direction;
     
     ofParameter<int> minPolylineSize;
+    ofParameter<int> maxPointDistance;
+    
+    int minAngle, maxAngle;
+//    ofParameter<int> minAngle;
+//    int old_minAngle;
+//    ofParameter<int> maxAngle;
+//    int old_maxAngle;
+    
+    ofParameter<int> angleRange;
+    int old_angleRange;
+    
+    ofParameter<int> angleSkipSteps;
+    int old_angleSkipSteps;
     
     //---tracker
     ofxCv::RectTrackerFollower<onePerson> tracker;
@@ -52,6 +66,9 @@ public:
     ofParameter<int> foundFacesSize;
     ofParameter<float> smoothingRate;
     
+    ofParameter<float> bgScaler;
+    float old_bgScaler;
+    
     //---smoothing filter
     ofParameter<bool> bUseBiQuadFilter;
     bool old_bUseBiQuadFilter;
@@ -67,12 +84,20 @@ public:
         gui_lidar.setName("LIDAR");
         gui_lidar.setPosition(10,100);
         gui_lidar.setHeaderBackgroundColor(ofColor(255,0,0));
+         gui_lidar.add(angleRange.set("angleRange",90,1,270)); 
+//         gui_lidar.add(maxAngle.set("maxAngle",135,-135,135)); 
+//        gui_lidar.add(minAngle.set("minAngle",-540,-540,540)); 
+//        gui_lidar.add(maxAngle.set("maxAngle",540,-540,540)); 
+         gui_lidar.add(angleSkipSteps.set("angleSkipSteps",1,1,10)); 
         
         gui_lidar.add(bMirror.set("mirror",true));
         gui_lidar.add(direction.set("direction",0,0,3));
-        gui_lidar.add(scale.set("scale",0.15,0.01,2)); 
+        gui_lidar.add(cloudScale.set("cloudScale",0.15,0.01,0.2)); 
+         gui_lidar.add(cloudY.set("cloudY",0,-600,600)); 
 //         gui_lidar.add(minPolylineSize.set("minPolylineSize",5,1,100)); 
-        gui_lidar.loadFromFile("GUIs/gui_lidar.xml");
+        gui_lidar.add(maxPointDistance.set("maxPointDistance",100,1,1000)); 
+      
+        gui_lidar.add(bgScaler.set("bgScaler",0.97,0.5,1)); 
         
         parameters_track.setName("tracking");
         parameters_track.add(tracker_persistence.set("tracker_persistence",15,0,200));
@@ -89,10 +114,14 @@ public:
         
         
         gui_lidar.add(parameters_track);
+        gui_lidar.loadFromFile("GUIs/gui_lidar.xml");
         
         tracker.setPersistence(tracker_persistence);
         // an object can move up to 50 pixels per frame
         tracker.setMaximumDistance(tracker_maxDistance);
+        
+        minAngle = -angleRange/2;
+        maxAngle = angleRange/2;
         
         ust.open();
         
@@ -103,7 +132,7 @@ public:
             //        ust.setScanningParameterByAngles( -135, 135, 1 );
             //setScanningParameterByAngles( float _minAngle, float _maxAngle, int _skipStep )
             //        ust.setScanningParameterByAngles( -135, 135, 1 );
-            ust.setScanningParameterByAngles( -135, 135, 1 );
+            ust.setScanningParameterByAngles( minAngle, maxAngle, angleSkipSteps );
             ust.startMeasurement();
         }
         else
@@ -111,6 +140,10 @@ public:
             ofLog() << "Connection failed!";
         }
         
+        old_angleRange = angleRange; 
+//        old_minAngle = minAngle;
+//        old_maxAngle = maxAngle;
+        old_angleSkipSteps = angleSkipSteps;
         
         colors.resize(1078);
         for(int i=0; i<colors.size(); i++){
@@ -145,11 +178,12 @@ public:
         pLines.clear();
         pLines.resize(1);
         float temp_dist = 0;
+        //group intersections
         if(points.size() > 1){
             for(int i=0; i<points.size()-1; i++){
                 temp_dist = points[i].distance(points[i+1]);
                 
-                if(temp_dist < 100){
+                if(temp_dist <= maxPointDistance){
                     pLines.back().addVertex(points[i].x, points[i].y);
                 } else{
                     //                ofLog()<<"temp_dist "<<temp_dist;
@@ -213,6 +247,18 @@ public:
              if(direction == 3) ust.setDirection( ofxUST::DIRECTION_UP );
         }
         
+        
+//        if(old_minAngle != minAngle || old_maxAngle != maxAngle || old_angleSkipSteps != angleSkipSteps){
+         if(old_angleRange != angleRange || old_angleSkipSteps != angleSkipSteps){
+//            old_minAngle = minAngle;
+//            old_maxAngle = maxAngle;
+             old_angleRange = angleRange;
+             minAngle = -angleRange / 2;
+             maxAngle = angleRange / 2;
+            old_angleSkipSteps = angleSkipSteps;
+            ust.setScanningParameterByAngles( minAngle, maxAngle, angleSkipSteps );
+            ust.startMeasurement();
+        }
         if(old_tracker_persistence != tracker_persistence){
             old_tracker_persistence = tracker_persistence;
             tracker.setPersistence(tracker_persistence);
@@ -238,13 +284,17 @@ public:
             
         }
 
+        if(old_bgScaler != bgScaler){
+            old_bgScaler = bgScaler;
+            getBackground();
+        }
     }
     void draw(){
 //        points.clear();
         ofPushMatrix();
         ofSetLineWidth(1);
-        ofTranslate( ofGetWidth() / 2, ofGetHeight() / 2 );
-        ofScale( scale, scale );
+        ofTranslate( ofGetWidth() / 2, ofGetHeight() / 2 + cloudY );
+        ofScale( cloudScale, cloudScale );
         
         for( int i = 0; i < ust.coordinates.size(); ++i ){
             ofSetColor( 127,100 );
@@ -343,7 +393,7 @@ public:
         }
         bgLine.close();
         bgLine2 = bgLine;
-        bgLine.scale(0.9, 0.9);
+        bgLine.scale(bgScaler,bgScaler);
         
     }
 };

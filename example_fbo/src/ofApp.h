@@ -4,8 +4,6 @@
 
 
 #include "ofxGui.h"
-#include "ofxCv.h"
-#include "ofxBiquadFilter.h"
 
 #include "lidarHandler.h"
 

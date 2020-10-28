@@ -11,7 +11,7 @@ void ofApp::setup()
     ofSetFrameRate( 40 );
     ofBackground( 0 );
     
-    lidar_object.setup();
+    lidar_object.setup(800,800);
     
     bShowGui = true;
     
@@ -34,7 +34,9 @@ void ofApp::update()
 //----------------------------------------
 void ofApp::draw()
 {
-   lidar_object.draw();
+//   lidar_object.draw();
+    lidar_object.getImage();
+    lidar_object.drawFbo();
     lidar_object.drawInfo(ofGetWidth() - 250, 10);
     if(bShowGui){
         lidar_object.gui_lidar.draw();
