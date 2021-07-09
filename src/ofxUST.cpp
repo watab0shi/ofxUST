@@ -11,14 +11,24 @@ ofxUST::ofxUST()
 , time( 0.0 )
 , lastCheckTime( 0.0 )
 , checkInterval( 1.0 )
+, isFrameNew(false)
 {
 }
+
+// ~ofxUST
+//----------------------------------------
+ofxUST::~ofxUST() {
+  if (isThreadRunning()) ofThread::waitForThread();
+  if (urg.is_open()) urg.close();
+}
+
 
 // open
 //----------------------------------------
 void ofxUST::open(std::string _deviceIp)
 {
-  bConnected = urg.open( _deviceIp.c_str(), port, Urg_driver::Ethernet );
+  deviceIp = _deviceIp;
+  bConnected = urg.open( deviceIp.c_str(), port, Urg_driver::Ethernet );
   
   if( bConnected )
   {
@@ -128,22 +138,27 @@ void ofxUST::setScanningParameterByAngles( float _minAngle, float _maxAngle, int
   }
 }
 
-// startMeasurement
+// start
 //----------------------------------------
-void ofxUST::startMeasurement()
+void ofxUST::start()
 {
+  stop();
+
   if( bConnected )
   {
     urg.start_measurement( Urg_driver::Distance, Urg_driver::Infinity_times, 0 );
+    startThread();
   }
 }
 
-// stopMeasurement
+// stop
 //----------------------------------------
-void ofxUST::stopMeasurement()
+void ofxUST::stop()
 {
   if( bConnected )
   {
+    waitForThread();
+    stopThread();
     urg.stop_measurement();
   }
 }
@@ -159,26 +174,26 @@ void ofxUST::update()
     if( time > lastCheckTime + checkInterval )
     {
       // try re-open
-      open();
+      open(deviceIp);
       if( bConnected )
       {
         setScanningParameterBySteps( minStep, maxStep, skip );
-        startMeasurement();
+        start();
       }
       lastCheckTime = time;
     }
     return;
   }
   
-  if( !urg.get_distance( data ) )
+  isFrameNew = false;
+
+  lock();
+  if (data != dataBuffer)
   {
-    // error
-    ofLog() << "[ofxUST::update][Urg_driver::get_distance()] " << urg.what();
-    
-    close();
-    bConnected = false;
-    return;
+    data = dataBuffer;
+    isFrameNew = true;
   }
+  unlock();
   
   long min_distance = urg.min_distance();
   long max_distance = urg.max_distance();
@@ -209,5 +224,27 @@ void ofxUST::close()
   if( bConnected )
   {
     urg.close();
+  }
+}
+
+// threadedFunction
+//----------------------------------------
+void ofxUST::threadedFunction()
+{
+  while (isThreadRunning())
+  {
+    if (lock())
+    {
+      if (bConnected)
+      {
+        if (!urg.get_distance( dataBuffer ))
+        {
+          // error
+          ofLog() << "[ofxUST::update][Urg_driver::get_distance()] " << urg.what();
+        }
+      }
+      unlock();
+    }
+    ofSleepMillis(1);
   }
 }

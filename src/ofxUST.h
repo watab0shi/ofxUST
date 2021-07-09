@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ofThread.h"
 #include "ofVec2f.h"
 #include "Urg_driver.h"
 
@@ -8,10 +9,11 @@ using namespace qrk;
 
 // ofUST
 //----------------------------------------
-class ofxUST
+class ofxUST : public ofThread
 {
 public:
   ofxUST();
+  ~ofxUST();
   
   enum Direction
   {
@@ -39,19 +41,23 @@ public:
   int  getMaxStep();
   
   bool isConnected();
-  
-  void startMeasurement();
-  void stopMeasurement();
+
+  void start();
+  void stop();
   
   void update();
   
   void close();
+
+  void threadedFunction();
   
   std::vector< long >    data;
+  std::vector< long >    dataBuffer;
   std::vector< ofVec2f > coordinates;
   
 private:
   const int  port = 10940;
+  std::string deviceIp;
   
   Urg_driver urg;
   bool       bConnected;
@@ -66,4 +72,6 @@ private:
   float time;
   float checkInterval;
   float lastCheckTime;
+
+  bool isFrameNew;
 };

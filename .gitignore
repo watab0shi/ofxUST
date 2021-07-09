@@ -15,6 +15,7 @@ Makefile
 icon.aps
 icon.rc
 obj
+*.obj
 *.vs
 *.VC.db
 *.VC.opendb

@@ -4,6 +4,8 @@
 //----------------------------------------
 void ofApp::setup()
 {
+  ofLogToConsole();
+  
   bMirror = false;
   scale   = 0.15;
   
@@ -15,7 +17,7 @@ void ofApp::setup()
     ust.setDirection( ofxUST::DIRECTION_DOWN );
     ust.setMirror( bMirror );
     ust.setScanningParameterByAngles( -135, 135, 1 );
-    ust.startMeasurement();
+    ust.start();
   }
   else
   {
@@ -24,7 +26,7 @@ void ofApp::setup()
   
   // Can't specify fps, due to the sensor specifications
   // Please use with `ofThread` if necessary.
-//  ofSetFrameRate( 40 );
+//  ofSetFrameRate( 60 );
   
   ofBackground( 0 );
 }
