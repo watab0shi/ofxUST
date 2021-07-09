@@ -7,7 +7,8 @@ void ofApp::setup()
   bMirror = false;
   scale   = 0.15;
   
-  ust.open();
+  ust.open();// default -> "192.168.0.10"
+//  ust.open("192.168.0.11");// or open with custom ip address
   
   if( ust.isConnected() )
   {
@@ -20,8 +21,10 @@ void ofApp::setup()
   {
     ofLog() << "Connection failed!";
   }
-
-  ofSetFrameRate( 40 );
+  
+  // Can't specify fps, due to the sensor specifications
+  // Please use with `ofThread` if necessary.
+//  ofSetFrameRate( 40 );
   
   ofBackground( 0 );
 }

@@ -22,7 +22,7 @@ public:
     DIRECTION_SIZE
   };
 
-  void open();
+  void open(std::string _deviceIp = "192.168.0.10");
   
   void setDirection( Direction _dir );
   void setMirror( bool _b );
@@ -51,8 +51,7 @@ public:
   std::vector< ofVec2f > coordinates;
   
 private:
-  const std::string deviceIp = "192.168.0.10";
-  const int         port     = 10940;
+  const int  port = 10940;
   
   Urg_driver urg;
   bool       bConnected;

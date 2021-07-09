@@ -1,5 +1,6 @@
 #include "ofxUST.h"
 #include "ofAppRunner.h"
+#include "ofLog.h"
 
 
 // ofxUST
@@ -15,9 +16,9 @@ ofxUST::ofxUST()
 
 // open
 //----------------------------------------
-void ofxUST::open()
+void ofxUST::open(std::string _deviceIp)
 {
-  bConnected = urg.open( deviceIp.c_str(), port, Urg_driver::Ethernet );
+  bConnected = urg.open( _deviceIp.c_str(), port, Urg_driver::Ethernet );
   
   if( bConnected )
   {
@@ -105,7 +106,9 @@ void ofxUST::setScanningParameterBySteps( int _minStep, int _maxStep, int _skipS
   
   if( bConnected )
   {
-    urg.set_scanning_parameter( _minStep, _maxStep, _skipStep );
+    minAngle = urg.step2deg( minStep );
+    maxAngle = urg.step2deg( maxStep );
+    urg.set_scanning_parameter( minStep, maxStep, skip );
   }
 }
 
@@ -119,7 +122,9 @@ void ofxUST::setScanningParameterByAngles( float _minAngle, float _maxAngle, int
   
   if( bConnected )
   {
-    urg.set_scanning_parameter( urg.deg2step( _minAngle ), urg.deg2step( _maxAngle ), _skipStep );
+    minStep = urg.deg2step( minAngle );
+    maxStep = urg.deg2step( maxAngle );
+    urg.set_scanning_parameter( minStep, maxStep, skip );
   }
 }
 
@@ -157,7 +162,7 @@ void ofxUST::update()
       open();
       if( bConnected )
       {
-        setScanningParameterByAngles( minAngle, maxAngle, skip );
+        setScanningParameterBySteps( minStep, maxStep, skip );
         startMeasurement();
       }
       lastCheckTime = time;
@@ -165,11 +170,9 @@ void ofxUST::update()
     return;
   }
   
-  long time_stamp = 0;
-  
-  // error
-  if( !urg.get_distance( data, &time_stamp ) )
+  if( !urg.get_distance( data ) )
   {
+    // error
     ofLog() << "[ofxUST::update][Urg_driver::get_distance()] " << urg.what();
     
     close();
