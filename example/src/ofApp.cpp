@@ -24,9 +24,7 @@ void ofApp::setup()
     ofLog() << "Connection failed!";
   }
   
-  // Can't specify fps, due to the sensor specifications
-  // Please use with `ofThread` if necessary.
-//  ofSetFrameRate( 60 );
+  ofSetFrameRate( 60 );
   
   ofBackground( 0 );
 }
