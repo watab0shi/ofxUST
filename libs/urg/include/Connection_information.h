@@ -28,7 +28,10 @@ namespace qrk
     private:
         Connection_information(void);
         struct pImpl;
-        std::auto_ptr<pImpl> pimpl;
+//        std::auto_ptr<pImpl> pimpl;
+        //https://github.com/Open-Transactions/Moneychanger/issues/308#issuecomment-395919991
+        std::unique_ptr<pImpl> pimpl;
+        
     };
 }
 
